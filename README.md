@@ -1,8 +1,6 @@
 # nepali-datepicker-vuejs
 
-```
 An easy-to-use and customizable nepali date picker component powered by Vue 3
-```
 ## NOTE: This Component is heavily based on https://github.com/krijanniroula/v-nepalidatepicker
 
 ## Quick Start
