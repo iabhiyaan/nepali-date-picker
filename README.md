@@ -6,7 +6,7 @@
 
 ## Quick Start
 ``` javascript
-import NepaliDatePicker from '@/components/NepaliDatePicker';
+import NepaliDatePicker from 'np-date-picker-vue-3/src/components/NepaliDatePicker.vue';
 
 export default {
   components: {
@@ -19,7 +19,7 @@ export default {
 
 The following customizable properties can be added to the component
 
-1. classValue 
+1. classValue
 2. calenderType
 3. placeholder
 4. format
@@ -47,10 +47,10 @@ This works exactly as class properties. Eg: classValue="form-control" (boostrap 
 
 ## Examples - calenderType
 
-Date picker is present in nepali language and English nepali language. 
+Date picker is present in nepali language and English nepali language.
 Default type will be English nepali.
 
-For nepali language : 
+For nepali language :
 
 ```vue
 <template>
