@@ -14,7 +14,13 @@ const nepaliDate1 = ref('')
 
 <template>
   <div id="app">
-    <Reminder />
+    <h3>
+      Reminder Example:
+    </h3>
+    <Reminder/>
+    <h3>
+      Available Ways
+    </h3>
     <div style="display: flex">
       <div id="english-date">
         <label>English Nepali DatePicker :</label>

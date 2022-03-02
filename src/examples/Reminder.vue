@@ -11,7 +11,7 @@ const formData = ref({});
 
 <template>
   <div style="margin-bottom: 10px;">
-    <input type="text" v-model="formData.title" placeholder="title">
+    <input type="text" v-model="formData.title" placeholder="Reminder title">
   </div>
   <DateRangePicker v-model:from-date="formData.reminderFromDate" v-model:to-date="formData.reminderToDate"/>
   <pre>{{ formData }}</pre>

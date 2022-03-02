@@ -34,10 +34,12 @@ export default {
         classValue="form-control"
         :model-value="fromDate"
         @update:modelValue="fromDateFn"
+        placeholder="From Date"
     />
     <NepaliDatePicker
         style="margin-left: 30px;"
         calenderType="Nepali"
+        placeholder="To Date"
         format="yyyy-mm-dd"
         classValue="form-control"
         :model-value="toDate"
