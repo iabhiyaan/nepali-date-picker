@@ -3,6 +3,8 @@ import {ref} from "vue";
 
 import NepaliDatePicker from './components/NepaliDatePicker.vue';
 
+import Reminder from "./examples/Reminder";
+
 const englishDate = ref('')
 const nepaliDate = ref('')
 const englishDate1 = ref('')
@@ -12,6 +14,7 @@ const nepaliDate1 = ref('')
 
 <template>
   <div id="app">
+    <Reminder />
     <div style="display: flex">
       <div id="english-date">
         <label>English Nepali DatePicker :</label>
