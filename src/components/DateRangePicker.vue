@@ -7,9 +7,15 @@ export default {
   },
   props: {
     fromDate: {},
-    toDate: {}
+    toDate: {},
+    format: {type: String, default: "YYYY-MM-DD"},
+    calenderType: {type: String, default: "Nepali"},
+    yearSelect: {type: Boolean, default: true},
+    monthSelect: {type: Boolean, default: true},
+    classValue: {type: String, default: ""},
+    placeholder: {type: String, default: ""},
   },
-  setup(props, { emit }) {
+  setup(props, {emit}) {
     function fromDateFn(val) {
       emit('update:fromDate', val)
     }
@@ -29,18 +35,16 @@ export default {
 <template>
   <div style="display: flex; margin-bottom: 40px;">
     <NepaliDatePicker
-        calenderType="Nepali"
-        format="yyyy-mm-dd"
+        v-bind="{...$attrs, ...$props}"
         classValue="form-control"
+        placeholder="From Date"
         :model-value="fromDate"
         @update:modelValue="fromDateFn"
-        placeholder="From Date"
     />
     <NepaliDatePicker
+        v-bind="{...$attrs, ...$props}"
         style="margin-left: 30px;"
-        calenderType="Nepali"
         placeholder="To Date"
-        format="yyyy-mm-dd"
         classValue="form-control"
         :model-value="toDate"
         @update:modelValue="toDateFn"
