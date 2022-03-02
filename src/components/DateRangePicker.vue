@@ -8,7 +8,7 @@ export default {
   props: {
     fromDate: {},
     toDate: {},
-    format: {type: String, default: "YYYY-MM-DD"},
+    format: {type: String, default: "yyyy-mm-dd"},
     calenderType: {type: String, default: "Nepali"},
     yearSelect: {type: Boolean, default: true},
     monthSelect: {type: Boolean, default: true},
