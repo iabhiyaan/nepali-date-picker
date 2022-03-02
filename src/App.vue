@@ -24,7 +24,7 @@ const nepaliDate1 = ref('')
     <div style="display: flex">
       <div id="english-date">
         <label>English Nepali DatePicker :</label>
-        <NepaliDatePicker v-model="englishDate"/>
+        <NepaliDatePicker v-model="englishDate" />
         <div>
           {{ englishDate }}
         </div>

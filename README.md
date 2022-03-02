@@ -1,9 +1,11 @@
 # nepali-datepicker-vuejs
 
 An easy-to-use and customizable nepali date picker component powered by Vue 3
+
 ## NOTE: This Component is heavily based on https://github.com/krijanniroula/v-nepalidatepicker
 
 ## Quick Start
+
 ```
 npm i np-date-picker-vue-3
 ```
@@ -26,9 +28,8 @@ The following customizable properties can be added to the component
 2. calenderType
 3. placeholder
 4. format
-5. value
-6. yearSelect
-7. monthSelect
+5. yearSelect
+6. monthSelect
 
 ## Examples - classValue
 
@@ -47,17 +48,16 @@ This works exactly as class properties. Eg: classValue="form-control" (boostrap 
 </style>
 ```
 
-
 ## Examples - calenderType
 
-Date picker is present in nepali language and English nepali language.
-Default type will be English nepali.
+Date picker is present in nepali language and English nepali language. Default type will be English nepali.
 
 For nepali language :
 
 ```vue
+
 <template>
-  <NepaliDatePicker calenderType="Nepali" />
+  <NepaliDatePicker calenderType="Nepali"/>
 </template>
 
 ```
@@ -65,8 +65,9 @@ For nepali language :
 ## Examples - placeholder
 
 ```vue
+
 <template>
-  <NepaliDatePicker placeholder="YYYY-MM-DD" />
+  <NepaliDatePicker placeholder="YYYY-MM-DD"/>
 </template>
 
 ```
@@ -112,8 +113,9 @@ dddd - Day of week full form nepali (आइतबार, सोमबार, ...
 ```
 
 ```vue
+
 <template>
-  <NepaliDatePicker format="YYYY-MM-DD" />
+  <NepaliDatePicker format="YYYY-MM-DD"/>
 </template>
 
 ```
@@ -123,8 +125,15 @@ dddd - Day of week full form nepali (आइतबार, सोमबार, ...
 Initial value for the datepicker.
 
 ```vue
+
+<script setup>
+import {ref} from 'vue'
+
+const birthDay = ref('2055-02-20')
+</script>
+
 <template>
-  <NepaliDatePicker value="2053-09-19" />
+  <NepaliDatePicker :modelValue="birthDay"/>
 </template>
 
 ```
@@ -134,8 +143,9 @@ Initial value for the datepicker.
 The dropdown year select can be turned off using boolean type to yearSelect
 
 ```vue
+
 <template>
-  <NepaliDatePicker :yearSelect="false" />
+  <NepaliDatePicker :yearSelect="false"/>
 </template>
 
 ```
@@ -145,8 +155,9 @@ The dropdown year select can be turned off using boolean type to yearSelect
 The dropdown month select can be turned off using boolean type to monthSelect
 
 ```vue
+
 <template>
-  <NepaliDatePicker :monthSelect="false" />
+  <NepaliDatePicker :monthSelect="false"/>
 </template>
 
 ```
@@ -154,8 +165,16 @@ The dropdown month select can be turned off using boolean type to monthSelect
 ## Examples - All in one
 
 ```vue
+
 <template>
-  <NepaliDatePicker calenderType="Nepali" placeholder="YYYY-MM-DD" format="YYYY-MM-DD" value="2053-09-19" :yearSelect="false" :monthSelect="false" />
+  <NepaliDatePicker
+      calenderType="Nepali"
+      placeholder="YYYY-MM-DD"
+      format="YYYY-MM-DD"
+      value="2055-02-20"
+      :yearSelect="false"
+      :monthSelect="false"
+  />
 </template>
 
 ```
