@@ -1,13 +1,12 @@
 <script>
-import {computed, ref} from "vue";
+// node_modules
+import {computed, ref, toRefs} from "vue";
 import NepaliDate from "nepali-date/cjs/NepaliDate";
-import {
-  YEAR_DATES,
-  ENGLISH_WEEK,
-  NEPALI_WEEK,
-  NEPALI_MONTH,
-  ENGLISH_NEPALI_MONTH,
-} from "./constants.js";
+
+// helpers
+import useDate from "@/composables/useDate";
+// import useNavigation from "@/composables/useNavigation";
+import {ENGLISH_WEEK} from "@/components/constants";
 
 export default {
   name: 'NepaliDatePicker',
@@ -20,11 +19,21 @@ export default {
     placeholder: {type: String, default: ""},
     modelValue: {type: String, default: ""},
   },
-  setup(props, {emit}) {
+  setup(props, context) {
+    const {emit} = context
+
     const dateValue = computed({
       get: () => props.modelValue,
       set: (val) => emit('update:modelValue', val)
     })
+
+    const {date, setMonthAndYear, yearValue, monthValue, visible, show, hide} = useDate(props)
+
+    function select(dateData) {
+      date.value = dateData;
+      dateValue.value = date.value.format(props.format);
+      hide();
+    }
 
     const numberOfYears = ref(87)
     const startingYear = ref(2001)
@@ -44,127 +53,6 @@ export default {
       hide();
     }
 
-    // feature toggle visibility of picker
-    const visible = ref(false);
-
-    function show() {
-      visible.value = true;
-      setTimeout(() => document.addEventListener("click", this.hide), 200);
-    }
-
-    function hide() {
-      visible.value = false;
-      document.removeEventListener("click", hide);
-    }
-
-    // feature formatted dates
-    const date = ref(props.modelValue === '' ? new NepaliDate() : new NepaliDate(props.modelValue))
-    const formatNepali = ref(props.calenderType === "Nepali");
-    const endDay = ref(null)
-
-
-    const formattedYear = computed(() => formatNepali.value ? date.value.format("yyyy") : date.value.format("YYYY"));
-    const formattedDate = computed(() => formatNepali.value ? date.value.format("dddd, dd mmmm") : date.value.format("DDDD, DD MMMM"))
-    const formattedTodayText = computed(() => formatNepali.value ? "आज" : "Today");
-    const formattedYearOrMonth = computed(() => {
-      if (props.monthSelect === false && props.yearSelect === false) {
-        return formatNepali.value
-            ? date.value.format("mmmm yyyy")
-            : date.value.format("MMMM YYYY");
-      }
-
-      if (props.monthSelect === false) {
-        return formatNepali.value
-            ? date.value.format("mmmm")
-            : date.value.format("MMMM");
-      }
-
-      if (props.yearSelect === false) {
-        return formatNepali.value
-            ? date.value.format("yyyy")
-            : date.value.format("YYYY");
-      }
-      return "";
-    });
-    const getMonthsList = computed(() => formatNepali.value ? NEPALI_MONTH : ENGLISH_NEPALI_MONTH)
-    const year = computed(() => date.value.year)
-
-    const days = computed(() => {
-      YEAR_DATES.forEach((yearData) => {
-        if (yearData.year == date.value.year) {
-          yearData.value.forEach((data, index) => {
-            // compare monthValue selected to index of yearData value
-            if (index == date.value.month) {
-              endDay.value = data; // eslint-disable-line
-            }
-          });
-        }
-      });
-      return Array(endDay.value)
-          .fill()
-          .map((_, idx) => new NepaliDate(year.value, date.value.month, idx + 1));
-    })
-
-    const weekdays = computed(() => formatNepali.value ? NEPALI_WEEK : ENGLISH_WEEK)
-
-    function monthSelectChange() {
-      date.value.setMonth(monthValue.value);
-    }
-
-    function active(argDate) {
-      return date.value.getTime() === argDate.getTime();
-    }
-
-    function checkToday(date) {
-      let today = new NepaliDate();
-      return (
-          date.day == today.day &&
-          date.year == today.year &&
-          date.month == today.month
-      );
-    }
-
-    function select(date) {
-      date.value = date;
-      dateValue.value = date.value.format(props.format);
-      hide();
-    }
-
-    const yearValue = ref(props.modelValue === "" ? new NepaliDate().getYear() : new NepaliDate(props.modelValue).getYear())
-    const monthValue = ref(props.modelValue === "" ? new NepaliDate().getMonth() : new NepaliDate(props.modelValue).getMonth())
-
-    function setMonthAndYear(month, year) {
-      monthValue.value = month;
-      yearValue.value = year;
-    }
-
-    function yearSelectChange() {
-      date.value.setYear(yearValue.value);
-    }
-
-    // feature prev next
-    function prev() {
-      let _month = date.value.month - 1;
-      let _year = date.value.year;
-      if (_month < 0) {
-        _year--;
-        _month = 11;
-      }
-      setMonthAndYear(_month, _year);
-      date.value = new NepaliDate(_year, _month, 1);
-    }
-
-    function next() {
-      let _month = date.value.month + 1;
-      let _year = date.value.year;
-      if (_month > 11) {
-        _year++;
-        _month = 0;
-      }
-      setMonthAndYear(_month, _year);
-      date.value = new NepaliDate(_year, _month, 1);
-    }
-
     // feature week
     const startMonthValue = ref(null)
 
@@ -182,35 +70,23 @@ export default {
 
     return {
       dateValue,
+      /* useDate Starts */
+      ...useDate(props),
+      ...toRefs(date),
+      ...toRefs(yearValue),
+      ...toRefs(monthValue),
+      /* useDate Ends */
+      select,
       getNepaliDateWithYear,
       convertToNepali,
       today,
       visible,
       show,
       hide,
-      formatNepali,
-      formattedYear,
-      formattedDate,
-      formattedTodayText,
-      yearValue,
-      monthValue,
-      weekdays,
-      formattedYearOrMonth,
-      getMonthsList,
-      prev,
-      next,
-      monthSelectChange,
-      yearSelectChange,
       numberOfYears,
       startingYear,
       startMonthValue,
       startWeek,
-      active,
-      checkToday,
-      endDay,
-      year,
-      days,
-      select
     }
   },
 }

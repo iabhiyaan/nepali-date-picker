@@ -11,11 +11,11 @@ const formData = ref({});
 
 <template>
   <div style="margin-bottom: 10px;">
-    <input type="text" v-model="formData.title" placeholder="Reminder title">
+    <input type="text" v-model="formData.title" placeholder="Meeting title">
   </div>
   <DateRangePicker
-      v-model:from-date="formData.reminderFromDate"
-      v-model:to-date="formData.reminderToDate"
+      v-model:from-date="formData.meetingFromDate"
+      v-model:to-date="formData.meetingToDate"
   />
   <pre>{{ formData }}</pre>
 </template>
