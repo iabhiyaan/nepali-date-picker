@@ -15,8 +15,7 @@ const props = defineProps({
   modelValue: {type: String, default: ""},
 })
 
-const {days, date} = useDate(props)
-
+const {days, date, visible, show} = useDate(props)
 const formData = ref('');
 
 function selectDay(dateData) {
@@ -27,11 +26,11 @@ function selectDay(dateData) {
 </script>
 
 <template>
-  <input type="text" v-model="formData"/>
+  <input type="text" v-model="formData" @focus="show" />
   <div>
     {{ formData }}
   </div>
-  <div class="flex flex-wrap" style="max-width: 400px; margin-top: 10px;">
+  <div v-if="visible" class="flex flex-wrap" style="max-width: 400px; margin-top: 10px;">
     <div class="day-box" v-for="(date, i) in days" :key="i">
       <div class="cursor-pointer" @click="selectDay(date)">{{ date.day }}</div>
     </div>
