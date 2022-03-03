@@ -1,6 +1,8 @@
-import {computed, reactive, ref} from "vue";
+// node_modules
+import {computed, ref} from "vue";
 import NepaliDate from "nepali-date/cjs/NepaliDate";
 
+// helpers
 import {
     YEAR_DATES,
     ENGLISH_WEEK,
@@ -9,21 +11,7 @@ import {
     ENGLISH_NEPALI_MONTH,
 } from "../components/constants";
 
-export const dateStore = reactive({
-    dateValue: ''
-})
-
 export default function useDate(props) {
-
-    // const dateValue = computed({
-    //     get: () => props.modelValue,
-    //     set: (val) => {
-    //         console.log('===');
-    //         console.log(val);
-    //         return props.modelValue = val
-    //     },
-    // })
-
     const date = ref(props.modelValue === '' ? new NepaliDate() : new NepaliDate(props.modelValue))
     const formatNepali = ref(props.calenderType === "Nepali");
     const endDay = ref(null)
@@ -114,6 +102,29 @@ export default function useDate(props) {
         date.value.setYear(yearValue.value);
     }
 
+    // feature next-prev
+    function prev() {
+        let _month = date.value.month - 1;
+        let _year = date.value.year;
+        if (_month < 0) {
+            _year--;
+            _month = 11;
+        }
+        setMonthAndYear(_month, _year);
+        date.value = new NepaliDate(_year, _month, 1);
+    }
+
+    function next() {
+        let _month = date.value.month + 1;
+        let _year = date.value.year;
+        if (_month > 11) {
+            _year++;
+            _month = 0;
+        }
+        setMonthAndYear(_month, _year);
+        date.value = new NepaliDate(_year, _month, 1);
+    }
+
     return {
         // states
         date,
@@ -130,7 +141,6 @@ export default function useDate(props) {
         yearValue,
         monthValue,
         visible,
-
         //    methods
         monthSelectChange,
         active,
@@ -139,6 +149,9 @@ export default function useDate(props) {
         yearSelectChange,
         show,
         hide,
+        // feature next-prev
+        prev,
+        next,
     }
 
 }

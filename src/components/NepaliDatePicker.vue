@@ -1,6 +1,6 @@
 <script>
 // node_modules
-import {computed, ref} from "vue";
+import {computed, ref, toRefs} from "vue";
 import NepaliDate from "nepali-date/cjs/NepaliDate";
 
 // helpers
@@ -29,8 +29,8 @@ export default {
 
     const {date, setMonthAndYear, yearValue, monthValue, visible, show, hide} = useDate(props)
 
-    function select(date) {
-      date.value = date;
+    function select(dateData) {
+      date.value = dateData;
       dateValue.value = date.value.format(props.format);
       hide();
     }
@@ -53,29 +53,6 @@ export default {
       hide();
     }
 
-    // feature prev next
-    function prev() {
-      let _month = date.value.month - 1;
-      let _year = date.value.year;
-      if (_month < 0) {
-        _year--;
-        _month = 11;
-      }
-      setMonthAndYear(_month, _year);
-      date.value = new NepaliDate(_year, _month, 1);
-    }
-
-    function next() {
-      let _month = date.value.month + 1;
-      let _year = date.value.year;
-      if (_month > 11) {
-        _year++;
-        _month = 0;
-      }
-      setMonthAndYear(_month, _year);
-      date.value = new NepaliDate(_year, _month, 1);
-    }
-
     // feature week
     const startMonthValue = ref(null)
 
@@ -92,19 +69,14 @@ export default {
     })
 
     return {
+      dateValue,
       /* useDate Starts */
       ...useDate(props),
-      date,
-      setMonthAndYear,
-      yearValue,
-      monthValue,
-      dateValue,
-      select,
+      ...toRefs(date),
+      ...toRefs(yearValue),
+      ...toRefs(monthValue),
       /* useDate Ends */
-      /* useNavigation Starts */
-      prev,
-      next,
-      /* useNavigation Ends */
+      select,
       getNepaliDateWithYear,
       convertToNepali,
       today,
