@@ -236,7 +236,7 @@ export default {
           <button class="calendar__month__prev" @click="prev">
             <b>></b>
           </button>
-          <span>{{ formattedYearOrMonth }}</span>
+          <span>{{ formattedYearOrMonth }} </span>
           <select
               @change="monthSelectChange"
               v-model="monthValue"
