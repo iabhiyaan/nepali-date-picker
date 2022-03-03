@@ -3,7 +3,8 @@ import {ref} from "vue";
 
 import NepaliDatePicker from './components/NepaliDatePicker.vue';
 
-import Reminder from "./examples/Reminder";
+import Meeting from "./examples/Meeting";
+import CustomDatePicker from "./examples/CustomDatePicker";
 
 const englishDate = ref('')
 const nepaliDate = ref('')
@@ -15,16 +16,18 @@ const nepaliDate1 = ref('')
 <template>
   <div id="app">
     <h3>
-      Reminder Example:
+      Meeting Example:
     </h3>
-    <Reminder/>
+    <Meeting/>
+    <h3>Custom Date Picker</h3>
+    <CustomDatePicker />
     <h3>
       Available Ways
     </h3>
     <div style="display: flex">
       <div id="english-date">
         <label>English Nepali DatePicker :</label>
-        <NepaliDatePicker v-model="englishDate" />
+        <NepaliDatePicker v-model="englishDate"/>
         <div>
           {{ englishDate }}
         </div>
