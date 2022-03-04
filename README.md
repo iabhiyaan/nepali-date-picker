@@ -11,8 +11,6 @@ npm i np-date-picker-vue-3
 ```
 
 ``` javascript
-import NepaliDatePicker from 'np-date-picker-vue-3/src/components/NepaliDatePicker.vue';
-Or
 import { NepaliDatePicker } from 'np-date-picker-vue-3'
 
 export default {
