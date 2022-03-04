@@ -15,12 +15,17 @@ const nepaliDate1 = ref('')
 
 <template>
   <div id="app">
-    <h3>
-      Meeting Example:
-    </h3>
-    <Meeting/>
-    <h3>Custom Date Picker</h3>
-    <CustomDatePicker />
+    <div>
+      <h3>
+        Meeting Example:
+      </h3>
+      <Meeting/>
+    </div>
+    <div class="mb-10">
+      <h3>Custom Date Picker</h3>
+      <CustomDatePicker/>
+    </div>
+
     <h3>
       Available Ways
     </h3>
@@ -36,7 +41,6 @@ const nepaliDate1 = ref('')
         <label>English DatePicker :</label>
         <NepaliDatePicker
             calenderType="English"
-            format="YYYY-MM-DD"
             classValue="form-control"
             v-model="englishDate"
         />
@@ -47,9 +51,8 @@ const nepaliDate1 = ref('')
       <div style="margin-left: 30px" id="english-nepali-without-select">
         <label>English DatePicker (without select):</label>
         <NepaliDatePicker
+            calenderType="English"
             v-model="englishDate1"
-            calender-type="English"
-            format="YYYY-MM-DD"
             :monthSelect="false"
             :yearSelect="false"
         />

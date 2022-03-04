@@ -52,7 +52,7 @@ function selectDay(dateData) {
 .day-box {
   outline: 1px solid red;
   padding: 12px;
-  width: 24px;
+  width: 40px;
   background: #eee;
 }
 
