@@ -14,6 +14,8 @@ import {
 export default function useDate(props) {
     const date = ref(props.modelValue === '' ? new NepaliDate() : new NepaliDate(props.modelValue))
     const formatNepali = ref(props.calenderType === "Nepali");
+    const formatEnglish = ref(props.calenderType === "English");
+
     const endDay = ref(null)
 
     const formattedYear = computed(() => formatNepali.value ? date.value.format("yyyy") : date.value.format("YYYY"));
@@ -102,6 +104,11 @@ export default function useDate(props) {
         date.value.setYear(yearValue.value);
     }
 
+    function convertToNepali(date) {
+      return new NepaliDate(date).format("yyyy-mm-d");
+    }
+
+
     // feature next-prev
     function prev() {
         let _month = date.value.month - 1;
@@ -129,6 +136,7 @@ export default function useDate(props) {
         // states
         date,
         formatNepali,
+        formatEnglish,
         endDay,
         formattedYear,
         formattedDate,
@@ -149,6 +157,7 @@ export default function useDate(props) {
         yearSelectChange,
         show,
         hide,
+        convertToNepali,
         // feature next-prev
         prev,
         next,

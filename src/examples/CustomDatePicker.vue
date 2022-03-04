@@ -5,8 +5,16 @@ import {defineProps, ref} from 'vue'
 import useDate from "@/composables/useDate";
 
 const props = defineProps({
-  format: {type: String, default: "YYYY-MM-DD"},
-  calenderType: {type: String, default: "English"},
+  calenderType: {type: String, default: "Nepali"},
+  format: {
+      type: String,
+      default(rawProps) {
+        if (rawProps.calenderType === 'English') {
+          return 'YYYY-MM-DD'
+        }
+        return 'yyyy-mm-dd'
+      },
+  },
   yearSelect: {type: Boolean, default: true},
   monthSelect: {type: Boolean, default: true},
   classValue: {type: String, default: ""},
@@ -14,7 +22,7 @@ const props = defineProps({
   modelValue: {type: String, default: ""},
 })
 
-const {days, date, visible, show} = useDate(props)
+const {days, date, visible, show, convertToNepali, formatEnglish} = useDate(props)
 const formData = ref('');
 
 function selectDay(dateData) {
@@ -31,7 +39,7 @@ function selectDay(dateData) {
   </div>
   <div v-if="visible" class="flex flex-wrap" style="max-width: 400px; margin-top: 10px;">
     <div class="day-box" v-for="(date, i) in days" :key="i">
-      <div class="cursor-pointer" @click="selectDay(date)">{{ date.day }}</div>
+      <div class="cursor-pointer" @click="selectDay(date)">{{ formatEnglish ? date.day :  convertToNepali(date).substr(8, 10)}}</div>
     </div>
   </div>
 </template>

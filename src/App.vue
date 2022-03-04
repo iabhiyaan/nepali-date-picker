@@ -23,7 +23,7 @@ const nepaliDate1 = ref('')
     </div>
     <div class="mb-10">
       <h3>Custom Date Picker</h3>
-      <CustomDatePicker/>
+      <CustomDatePicker />
     </div>
 
     <h3>

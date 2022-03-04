@@ -52,10 +52,6 @@ export default {
       return new NepaliDate(year, 0, 1).format("yyyy-mm-d");
     }
 
-    function convertToNepali(date) {
-      return new NepaliDate(date).format("yyyy-mm-d");
-    }
-
     function today() {
       dateValue.value = new NepaliDate().format(props.format);
       date.value = new NepaliDate();
@@ -88,7 +84,6 @@ export default {
       /* useDate Ends */
       select,
       getNepaliDateWithYear,
-      convertToNepali,
       today,
       visible,
       show,
