@@ -25,7 +25,7 @@ function selectDay(dateData) {
 </script>
 
 <template>
-  <input type="text" v-model="formData" @focus="show">
+  <input type="text" v-model="formData" @focus="show" class="mt-1 block w-50 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border-gray">
   <div>
     {{ formData }}
   </div>
@@ -37,6 +37,10 @@ function selectDay(dateData) {
 </template>
 
 <style>
+.border-gray {
+  border: 1px solid grey;
+}
+
 .flex {
   display: flex;
 }

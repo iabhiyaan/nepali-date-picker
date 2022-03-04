@@ -97,9 +97,10 @@ export default {
     <input
         type="text"
         v-model="dateValue"
-        :class="classValue"
         @focus="show"
         :placeholder="placeholder"
+        class="mt-1 block w-full rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border-gray"
+        :class="classValue"
     />
     <div v-if="visible" :class="['calendar', { show: visible }]">
       <div class="calendar__header">
@@ -194,6 +195,10 @@ export default {
   margin: 0;
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
+}
+
+.border-gray {
+  border: 1px solid grey;
 }
 
 .datepicker {
