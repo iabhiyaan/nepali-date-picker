@@ -187,6 +187,7 @@ The dropdown month select can be turned off using boolean type to monthSelect
 
 <script setup>
 import {defineProps, ref} from 'vue'
+import {useDate} from "np-date-picker-vue-3";
 
 const props = defineProps({
   format: {type: String, default: "YYYY-MM-DD"},
@@ -197,8 +198,6 @@ const props = defineProps({
   placeholder: {type: String, default: ""},
   modelValue: {type: String, default: ""},
 })
-
-import {useDate} from "np-date-picker-vue-3";
 
 const {days, date, visible, show} = useDate(props)
 
