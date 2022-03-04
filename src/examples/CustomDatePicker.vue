@@ -1,7 +1,6 @@
-<script setup>
+<script type="module" setup>
 // node_modules
 import {defineProps, ref} from 'vue'
-
 // helpers
 import useDate from "@/composables/useDate";
 
@@ -26,7 +25,7 @@ function selectDay(dateData) {
 </script>
 
 <template>
-  <input type="text" v-model="formData" @focus="show" />
+  <input type="text" v-model="formData" @focus="show">
   <div>
     {{ formData }}
   </div>
