@@ -12,6 +12,8 @@ npm i np-date-picker-vue-3
 
 ``` javascript
 import NepaliDatePicker from 'np-date-picker-vue-3/src/components/NepaliDatePicker.vue';
+Or
+import { NepaliDatePicker } from 'np-date-picker-vue-3'
 
 export default {
   components: {
@@ -176,5 +178,70 @@ The dropdown month select can be turned off using boolean type to monthSelect
       :monthSelect="false"
   />
 </template>
+
+```
+
+## Examples - Custom Component
+
+```vue
+
+<script setup>
+import {defineProps, ref} from 'vue'
+
+const props = defineProps({
+  format: {type: String, default: "YYYY-MM-DD"},
+  calenderType: {type: String, default: "English"},
+  yearSelect: {type: Boolean, default: true},
+  monthSelect: {type: Boolean, default: true},
+  classValue: {type: String, default: ""},
+  placeholder: {type: String, default: ""},
+  modelValue: {type: String, default: ""},
+})
+
+import {useDate} from "np-date-picker-vue-3";
+
+const {days, date, visible, show} = useDate(props)
+
+const formData = ref('');
+
+function selectDay(dateData) {
+  date.value = dateData;
+  formData.value = date.value.format(props.format)
+}
+
+</script>
+
+<template>
+  <input type="text" v-model="formData" @focus="show">
+  <div>
+    {{ formData }}
+  </div>
+  <div v-if="visible" class="flex flex-wrap" style="max-width: 400px; margin-top: 10px;">
+    <div class="day-box" v-for="(date, i) in days" :key="i">
+      <div class="cursor-pointer" @click="selectDay(date)">{{ date.day }}</div>
+    </div>
+  </div>
+</template>
+
+<style>
+.flex {
+  display: flex;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.day-box {
+  outline: 1px solid red;
+  padding: 12px;
+  width: 24px;
+  background: #eee;
+}
+
+.cursor-pointer {
+  cursor: pointer
+}
+</style>
 
 ```
