@@ -4,9 +4,9 @@ import {computed, ref, toRefs} from "vue";
 import NepaliDate from "nepali-date/cjs/NepaliDate";
 
 // helpers
-import useDate from "@/composables/useDate";
-// import useNavigation from "@/composables/useNavigation";
-import {ENGLISH_WEEK} from "@/components/constants";
+import useDate from "../composables/useDate";
+// import useNavigation from "../composables/useNavigation";
+import {ENGLISH_WEEK} from "./constants";
 
 export default {
   name: 'NepaliDatePicker',
