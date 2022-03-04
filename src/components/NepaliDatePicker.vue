@@ -11,8 +11,8 @@ import {ENGLISH_WEEK} from "./constants";
 export default {
   name: 'NepaliDatePicker',
   props: {
-    format: {type: String, default: "YYYY-MM-DD"},
-    calenderType: {type: String, default: "English"},
+    format: {type: String, default: "yyyy-mm-dd"},
+    calenderType: {type: String, default: "Nepali"},
     yearSelect: {type: Boolean, default: true},
     monthSelect: {type: Boolean, default: true},
     classValue: {type: String, default: ""},
