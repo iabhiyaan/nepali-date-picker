@@ -1,12 +1,9 @@
 <script>
 // node_modules
-import {computed, ref, toRefs} from "vue";
-import NepaliDate from "nepali-date/cjs/NepaliDate";
+import {computed} from "vue";
 
 // helpers
 import useDate from "../composables/useDate";
-// import useNavigation from "../composables/useNavigation";
-import {ENGLISH_WEEK} from "./constants";
 
 export default {
   name: 'NepaliDatePicker',
@@ -37,19 +34,12 @@ export default {
       set: (val) => emit('update:modelValue', val)
     })
 
-    const {date, setMonthAndYear, yearValue, monthValue, visible, show, hide} = useDate(props)
+    const {date, setMonthAndYear, hide, NepaliDate} = useDate(props)
 
     function select(dateData) {
       date.value = dateData;
       dateValue.value = date.value.format(props.format);
       hide();
-    }
-
-    const numberOfYears = ref(87)
-    const startingYear = ref(2001)
-
-    function getNepaliDateWithYear(year) {
-      return new NepaliDate(year, 0, 1).format("yyyy-mm-d");
     }
 
     function today() {
@@ -59,39 +49,14 @@ export default {
       hide();
     }
 
-    // feature week
-    const startMonthValue = ref(null)
-
-    const startWeek = computed(() => {
-      let currentDateValue = new NepaliDate(yearValue.value, monthValue.value, 1);
-      ENGLISH_WEEK.forEach((data, index) => {
-        if (currentDateValue.format("DDD") === "Sun") {
-          startMonthValue.value = 7; // eslint-disable-line
-        } else if (currentDateValue.format("DDD") === data) {
-          startMonthValue.value = index; // eslint-disable-line
-        }
-      });
-      return startMonthValue.value;
-    })
-
     return {
       dateValue,
       /* useDate Starts */
       ...useDate(props),
-      ...toRefs(date),
-      ...toRefs(yearValue),
-      ...toRefs(monthValue),
+      hide,
       /* useDate Ends */
       select,
-      getNepaliDateWithYear,
       today,
-      visible,
-      show,
-      hide,
-      numberOfYears,
-      startingYear,
-      startMonthValue,
-      startWeek,
     }
   },
 }

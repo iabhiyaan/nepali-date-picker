@@ -105,7 +105,7 @@ export default function useDate(props) {
     }
 
     function convertToNepali(date) {
-      return new NepaliDate(date).format("yyyy-mm-d");
+        return new NepaliDate(date).format("yyyy-mm-d");
     }
 
 
@@ -131,6 +131,31 @@ export default function useDate(props) {
         setMonthAndYear(_month, _year);
         date.value = new NepaliDate(_year, _month, 1);
     }
+
+    // feature years
+    const startingYear = ref(2001)
+
+    const numberOfYears = ref(87)
+
+    function getNepaliDateWithYear(year) {
+        return new NepaliDate(year, 0, 1).format("yyyy-mm-d");
+    }
+
+    // feature week
+    const startMonthValue = ref(null)
+
+    const startWeek = computed(() => {
+        let currentDateValue = new NepaliDate(yearValue.value, monthValue.value, 1);
+        ENGLISH_WEEK.forEach((data, index) => {
+            if (currentDateValue.format("DDD") === "Sun") {
+                startMonthValue.value = 7; // eslint-disable-line
+            } else if (currentDateValue.format("DDD") === data) {
+                startMonthValue.value = index; // eslint-disable-line
+            }
+        });
+        return startMonthValue.value;
+    })
+
 
     return {
         // states
@@ -161,6 +186,15 @@ export default function useDate(props) {
         // feature next-prev
         prev,
         next,
+        //    others
+        NepaliDate,
+        // feature years
+        numberOfYears,
+        getNepaliDateWithYear,
+        startingYear,
+        // feature week
+        startMonthValue,
+        startWeek
     }
 
 }
