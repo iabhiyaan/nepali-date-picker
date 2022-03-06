@@ -19,7 +19,11 @@ export default function useDate(props) {
     const endDay = ref(null)
 
     const formattedYear = computed(() => formatNepali.value ? date.value.format("yyyy") : date.value.format("YYYY"));
-    const formattedDate = computed(() => formatNepali.value ? date.value.format("dddd, dd mmmm") : date.value.format("DDDD, DD MMMM"))
+
+    const defaultDateFormat = ref("dddd, dd mmmm")
+    const defaultEnglishDateFormat = ref("DDDD, DD MMMM")
+    const formattedDate = computed(() => formatNepali.value ? date.value.format(defaultDateFormat.value) : date.value.format(defaultEnglishDateFormat.value))
+
     const formattedTodayText = computed(() => formatNepali.value ? "आज" : "Today");
     const formattedYearOrMonth = computed(() => {
         if (props.monthSelect === false && props.yearSelect === false) {
@@ -62,6 +66,12 @@ export default function useDate(props) {
 
     const weekdays = computed(() => formatNepali.value ? NEPALI_WEEK : ENGLISH_WEEK)
 
+    function selectDate(dateData) {
+        date.value = dateData;
+        hide();
+        return date.value.format(props.format);
+    }
+
     function monthSelectChange() {
         date.value.setMonth(monthValue.value);
     }
@@ -77,6 +87,13 @@ export default function useDate(props) {
             date.year == today.year &&
             date.month == today.month
         );
+    }
+
+    function getToday() {
+        date.value = new NepaliDate();
+        setMonthAndYear(date.value.getMonth(), date.value.getYear());
+        hide();
+        return new NepaliDate().format(props.format);
     }
 
     // feature toggle visibility of picker
@@ -106,6 +123,10 @@ export default function useDate(props) {
 
     function convertToNepali(date) {
         return new NepaliDate(date).format("yyyy-mm-d");
+    }
+
+    function getNepaliDays(date) {
+        return convertToNepali(date).substr(8, 10)
     }
 
 
@@ -141,6 +162,10 @@ export default function useDate(props) {
         return new NepaliDate(year, 0, 1).format("yyyy-mm-d");
     }
 
+    function getNepaliYears(year) {
+        return getNepaliDateWithYear(year).substr(0, 4)
+    }
+
     // feature week
     const startMonthValue = ref(null)
 
@@ -164,6 +189,10 @@ export default function useDate(props) {
         formatEnglish,
         endDay,
         formattedYear,
+        defaultDateFormat,
+        defaultEnglishDateFormat,
+        getToday,
+        selectDate,
         formattedDate,
         formattedTodayText,
         formattedYearOrMonth,
@@ -183,6 +212,7 @@ export default function useDate(props) {
         show,
         hide,
         convertToNepali,
+        getNepaliDays,
         // feature next-prev
         prev,
         next,
@@ -191,6 +221,7 @@ export default function useDate(props) {
         // feature years
         numberOfYears,
         getNepaliDateWithYear,
+        getNepaliYears,
         startingYear,
         // feature week
         startMonthValue,

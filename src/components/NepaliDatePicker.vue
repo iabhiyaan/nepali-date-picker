@@ -34,26 +34,20 @@ export default {
       set: (val) => emit('update:modelValue', val)
     })
 
-    const {date, setMonthAndYear, hide, NepaliDate} = useDate(props)
+    const {getToday, selectDate} = useDate(props)
 
-    function select(dateData) {
-      date.value = dateData;
-      dateValue.value = date.value.format(props.format);
-      hide();
+    function select(dayData) {
+      dateValue.value = selectDate(dayData);
     }
 
     function today() {
-      dateValue.value = new NepaliDate().format(props.format);
-      date.value = new NepaliDate();
-      setMonthAndYear(date.value.getMonth(), date.value.getYear());
-      hide();
+      dateValue.value = getToday()
     }
 
     return {
       dateValue,
       /* useDate Starts */
       ...useDate(props),
-      hide,
       /* useDate Ends */
       select,
       today,
