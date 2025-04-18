@@ -1,0 +1,46 @@
+// vite.config.ts
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import path from "path";
+import packageJson from "./package.json";
+
+export default defineConfig({
+  plugins: [
+    vue(), // Enable Vue plugin
+  ],
+  build: {
+    lib: {
+      // Could also be a dictionary or array of multiple entry points
+      entry: path.resolve(__dirname, "index.js"),
+      name: packageJson.name, // Global variable name for UMD build
+      formats: ["es", "umd", "cjs"], // Output formats
+      fileName: (format) => `${packageJson.name}.${format}.js`, // Output file naming
+    },
+    rollupOptions: {
+      // Make sure to externalize deps that shouldn't be bundled
+      // into your library (provided by the consuming application)
+      external: ["vue"],
+      output: {
+        // Provide global variables to use in the UMD build
+        // for externalized deps
+        globals: {
+          vue: "Vue",
+        },
+        // Optional: Configure asset file names if you have CSS/images
+        // assetFileNames: (assetInfo) => {
+        //   if (assetInfo.name === 'style.css') return 'my-vue-package.css';
+        //   return assetInfo.name;
+        // },
+      },
+    },
+    // Optional: Minify options or other build tweaks
+    // sourcemap: true, // Generate source maps for debugging
+    // emptyOutDir: true, // Clean output directory before build
+  },
+  // Optional: Define aliases for cleaner imports
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+    },
+  },
+});

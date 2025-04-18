@@ -3,7 +3,7 @@
 import {ref} from 'vue'
 
 // components
-import DateRangePicker from "../components/DateRangePicker";
+import DateRangePicker from "../components/DateRangePicker.vue";
 
 const formData = ref({});
 
