@@ -1,8 +1,8 @@
-import NepaliDatePicker from "./src/components/NepaliDatePicker";
-import DateRangePicker from "./src/components/DateRangePicker";
+import NepaliDatePicker from "./src/components/NepaliDatePicker.vue";
+import DateRangePicker from "./src/components/DateRangePicker.vue";
 
-import useDate from "./src/composables/useDate";
-import * as CONSTANT from './src/components/constants'
+import useDate from "./src/composables/useDate.js";
+import * as CONSTANT from './src/components/constants.js'
 
 export {
     NepaliDatePicker,
