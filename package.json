@@ -1,6 +1,6 @@
 {
   "name": "np-date-picker-vue-3",
-  "version": "0.10.3",
+  "version": "0.10.4",
   "type": "module",
   "main": "./dist/np-date-picker-vue-3.umd.cjs",
   "module": "./dist/np-date-picker-vue-3.js",
