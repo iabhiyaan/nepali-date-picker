@@ -26,21 +26,28 @@ export default defineConfig({
         globals: {
           vue: "Vue",
         },
-        // Optional: Configure asset file names if you have CSS/images
-        // assetFileNames: (assetInfo) => {
-        //   if (assetInfo.name === 'style.css') return 'my-vue-package.css';
-        //   return assetInfo.name;
-        // },
+        assetFileNames: (assetInfo) => {
+          return assetInfo.name;
+        },
       },
     },
+    cssCodeSplit: false,
+    minify: true,
+    sourcemap: true
     // Optional: Minify options or other build tweaks
     // sourcemap: true, // Generate source maps for debugging
     // emptyOutDir: true, // Clean output directory before build
+  },
+  css: {
+    modules: {
+      scopeBehaviour: 'local'
+    }
   },
   // Optional: Define aliases for cleaner imports
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
+      [packageJson.name]: path.resolve(__dirname, 'dist/np-date-picker-vue-3.es.js')
     },
   },
 });

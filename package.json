@@ -1,14 +1,15 @@
 {
   "name": "np-date-picker-vue-3",
-  "version": "0.10.4",
+  "version": "0.11.1",
   "type": "module",
   "main": "./dist/np-date-picker-vue-3.umd.cjs",
-  "module": "./dist/np-date-picker-vue-3.js",
+  "module": "./dist/np-date-picker-vue-3.es.js",
   "exports": {
     ".": {
-      "import": "./dist/np-date-picker-vue-3.js",
+      "import": "./dist/np-date-picker-vue-3.es.js",
       "require": "./dist/np-date-picker-vue-3.umd.cjs"
-    }
+    },
+    "./style.css": "./dist/np-date-picker-vue-3.css"
   },
   "files": [
     "dist",
