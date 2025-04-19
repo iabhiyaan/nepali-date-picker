@@ -3,8 +3,8 @@ import {ref} from "vue";
 
 import NepaliDatePicker from './components/NepaliDatePicker.vue';
 
-import Meeting from "./examples/Meeting";
-import CustomDatePicker from "./examples/CustomDatePicker";
+import Meeting from "./examples/Meeting.vue";
+import CustomDatePicker from "./examples/CustomDatePicker.vue";
 
 const englishDate = ref('')
 const nepaliDate = ref('')
