@@ -1,70 +1,72 @@
-<script>
-// node_modules
-import {computed} from "vue";
-
+<script setup>
 // helpers
 import useDate from "../composables/useDate";
 
-export default {
-  name: 'NepaliDatePicker',
-
-  props: {
-    // format: {type: String, default: "yyyy-mm-dd"},
-    calenderType: {type: String, default: "Nepali"},
-    format: {
-      type: String,
-      default(rawProps) {
-        if (rawProps.calenderType === 'English') {
-          return 'YYYY-MM-DD'
-        }
-        return 'yyyy-mm-dd'
-      },
+const props = defineProps({
+  calenderType: { type: String, default: "Nepali" },
+  format: {
+    type: String,
+    default(rawProps) {
+      if (rawProps.calenderType === "English") {
+        return "YYYY-MM-DD";
+      }
+      return "yyyy-mm-dd";
     },
-    yearSelect: {type: Boolean, default: true},
-    monthSelect: {type: Boolean, default: true},
-    classValue: {type: String, default: ""},
-    placeholder: {type: String, default: ""},
-    modelValue: {type: String, default: ""},
   },
-  setup(props, context) {
-    const {emit} = context
+  yearSelect: { type: Boolean, default: true },
+  monthSelect: { type: Boolean, default: true },
+  classValue: { type: String, default: "" },
+  placeholder: { type: String, default: "" },
+});
 
-    const dateValue = computed({
-      get: () => props.modelValue,
-      set: (val) => emit('update:modelValue', val)
-    })
+const dateValue = defineModel({ default: "" });
 
-    const {getToday, selectDate} = useDate(props)
+const {
+  getToday,
+  selectDate,
+  monthValue,
+  formattedYear,
+  formattedDate,
+  formattedYearOrMonth,
+  getMonthsList,
+  yearSelectChange,
+  yearValue,
+  numberOfYears,
+  startingYear,
+  monthSelectChange,
+  weekdays,
+  days,
+  startWeek,
+  visible,
+  show,
+  prev,
+  next,
+  active,
+  checkToday,
+  formatNepali,
+  convertToNepali,
+  formattedTodayText,
+  getNepaliDateWithYear,
+} = useDate(props);
 
-    function select(dayData) {
-      dateValue.value = selectDate(dayData);
-    }
+function select(dayData) {
+  dateValue.value = selectDate(dayData);
+}
 
-    function today() {
-      dateValue.value = getToday()
-    }
-
-    return {
-      dateValue,
-      /* useDate Starts */
-      ...useDate(props),
-      /* useDate Ends */
-      select,
-      today,
-    }
-  },
+function today() {
+  dateValue.value = getToday();
 }
 </script>
 
 <template>
   <div class="datepicker" @click.stop>
     <input
-        type="text"
-        v-model="dateValue"
-        @focus="show"
-        :placeholder="placeholder"
-        class="mt-1 block w-full rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border-gray"
-        :class="classValue"
+      type="text"
+      v-model="dateValue"
+      @focus="show"
+      :placeholder="placeholder"
+      class="mt-1 block w-full rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border-gray"
+      :class="classValue"
     />
     <div v-if="visible" :class="['calendar', { show: visible }]">
       <div class="calendar__header">
@@ -79,49 +81,52 @@ export default {
           </button>
           <span>{{ formattedYearOrMonth }} </span>
           <select
-              @change="monthSelectChange"
-              v-model="monthValue"
-              size="mini"
-              v-if="monthSelect"
-              style=" "
+            @change="monthSelectChange"
+            v-model="monthValue"
+            size="mini"
+            v-if="monthSelect"
+            style=""
           >
             <option
-                style="text-align-last:center"
-                v-for="(month, index) in getMonthsList"
-                :key="month"
-                :label="month"
-                :value="index"
+              style="text-align-last: center"
+              v-for="(month, index) in getMonthsList"
+              :key="month"
+              :label="month"
+              :value="index"
             >
               <!-- {{ month }} -->
             </option>
           </select>
           <select
-              @change="yearSelectChange"
-              v-model="yearValue"
-              size="mini"
-              v-if="yearSelect"
-              style="margin-left:5px"
+            @change="yearSelectChange"
+            v-model="yearValue"
+            size="mini"
+            v-if="yearSelect"
+            style="margin-left: 5px"
           >
             <option
-                style="text-align-last:center"
-                v-for="i in numberOfYears"
-                :key="i"
-                :value="startingYear + (i - 1)"
-                :label="formatNepali ? getNepaliDateWithYear(startingYear + (i - 1)).substr(0, 4) : startingYear + (i - 1)"
-            >
-            </option>
+              style="text-align-last: center"
+              v-for="i in numberOfYears"
+              :key="i"
+              :value="startingYear + (i - 1)"
+              :label="
+                formatNepali
+                  ? getNepaliDateWithYear(startingYear + (i - 1)).substr(0, 4)
+                  : startingYear + (i - 1)
+              "
+            ></option>
           </select>
           <button icon="el-icon-arrow-right" @click="next"><b>></b></button>
         </div>
 
         <!-- week days -->
-        <div style="padding:3px">
+        <div style="padding: 3px">
           <div class="calendar__weeks">
             <div
-                style="font-weight: bold;"
-                class="calendar__weekday"
-                v-for="(weekday, w) in weekdays"
-                :key="w"
+              style="font-weight: bold"
+              class="calendar__weekday"
+              v-for="(weekday, w) in weekdays"
+              :key="w"
             >
               {{ weekday }}
             </div>
@@ -129,18 +134,18 @@ export default {
           <!-- days of month -->
           <div class="calendar__days">
             <div
-                class="calendar__day_spacer"
-                :style="{ gridColumn: `span ${startWeek}` }"
+              class="calendar__day_spacer"
+              :style="{ gridColumn: `span ${startWeek}` }"
             ></div>
             <div
-                :class="[
+              :class="[
                 'calendar__day',
                 { selected: active(day) },
                 { today: checkToday(day) },
               ]"
-                v-for="(day, d) in days"
-                :key="d"
-                @click="select(day)"
+              v-for="(day, d) in days"
+              :key="d"
+              @click="select(day)"
             >
               {{ formatNepali ? convertToNepali(day).substr(8, 10) : day.day }}
             </div>
@@ -182,8 +187,9 @@ export default {
   position: absolute;
   width: 260px;
   top: 100%;
-  box-shadow: 0px 14px 45px rgba(0, 0, 0, 0.25),
-  0px 10px 18px rgba(0, 0, 0, 0.22);
+  box-shadow:
+    0px 14px 45px rgba(0, 0, 0, 0.25),
+    0px 10px 18px rgba(0, 0, 0, 0.22);
   background: #fff;
   visibility: hidden;
   opacity: 0;
