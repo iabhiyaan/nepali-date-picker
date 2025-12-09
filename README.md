@@ -1,213 +1,185 @@
 # nepali-datepicker-vuejs
 
-A sleek, fully customizable Nepali date-picker for Vue 3 backed by a powerful composable that lets you drop its core logic into any UI and build exactly the experience you want.
+A sleek, fully customizable Nepali date-picker for **Vue 3**, powered by a composable that lets you integrate its core logic into any UI and create exactly the experience you want.  
 
-Note: This component is heavily inspired by [v-nepalidatepicker](https://github.com/krijanniroula/v-nepalidatepicker)
+> **Note:** Heavily inspired by [v-nepalidatepicker](https://github.com/krijanniroula/v-nepalidatepicker)
+
+---
+
+## Demo
+
+- [Vue 3 Vite Demo](https://stackblitz.com/edit/vitejs-vite-33k3cq32?file=src%2FApp.vue)  
+- [Vue 3 Webpack Demo](https://codesandbox.io/p/sandbox/usage-np-date-picker-h26brp)
+
+---
 
 ## Quick Start
 
-```
+```bash
 npm i np-date-picker-vue-3
+
 ```
 
-``` javascript
+```vue
 <script setup>
 import { NepaliDatePicker } from 'np-date-picker-vue-3';
 import 'np-date-picker-vue-3/style.css';
 </script>
+```
+
 ## Customizable Properties
 
-The following customizable properties can be added to the component
+| Property       | Type    | Description                    |
+| -------------- | ------- | ------------------------------ |
+| `classValue`   | String  | Custom CSS class for the input |
+| `calenderType` | String  | "Nepali" or "English Nepali"   |
+| `placeholder`  | String  | Placeholder text for the input |
+| `format`       | String  | Date output format             |
+| `yearSelect`   | Boolean | Toggle year dropdown           |
+| `monthSelect`  | Boolean | Toggle month dropdown          |
 
-1. classValue
-2. calenderType
-3. placeholder
-4. format
-5. yearSelect
-6. monthSelect
 
-## Examples - classValue
+## Examples
 
-This works exactly as class properties. Eg: classValue="form-control" (boostrap class)
-(Note : In class="form-control", input will be rendered inside another input.)
-
+1. `classValue`
 ```vue
 <template>
   <NepaliDatePicker classValue="datepicker" />
 </template>
+
 <style>
-.datepicker{
+.datepicker {
   width: 50px;
   height: 20px;
 }
 </style>
 ```
 
-## Examples - calenderType
-
-Date picker is present in nepali language and English nepali language. Default type will be English nepali.
-
-For nepali language :
-
+2. `calenderType`
 ```vue
-
 <template>
-  <NepaliDatePicker calenderType="Nepali"/>
+  <NepaliDatePicker calenderType="Nepali" />
 </template>
-
 ```
 
-## Examples - placeholder
-
+3. `placeholder`
+   
 ```vue
-
 <template>
-  <NepaliDatePicker placeholder="YYYY-MM-DD"/>
+  <NepaliDatePicker placeholder="YYYY-MM-DD" />
 </template>
-
 ```
 
-## Examples - format
+4. `format`
 
-Format the date to provide various output based on format string
-
-```vue
-
-'yyyy-mm-dd' => २०७५-०२-०१
-'YYY-MM-DD' => 075-02-01
+Supported formats:
+```
+'yyyy-mm-dd'       => २०७५-०२-०१
+'YYY-MM-DD'        => 075-02-01
 'mmmm d, yyyy ddd' => जेष्ठ १, २०७५ मंगल
-'MMM D, YYYY DDD' => Jes 1, 2075 Tue
-
+'MMM D, YYYY DDD'  => Jes 1, 2075 Tue
 ```
 
+Format tokens:
+| Token | Meaning                                            |
+| ----- | -------------------------------------------------- |
+| YYYY  | 4-digit year (2075)                                |
+| yyyy  | 4-digit Nepali year (२०७५)                         |
+| YYY   | 3-digit year (075)                                 |
+| yyy   | 3-digit Nepali year (०७५)                          |
+| YY    | 2-digit year                                       |
+| yy    | 2-digit Nepali year                                |
+| M     | Month number (1-12)                                |
+| m     | Month number in Nepali (१-१२)                      |
+| MM    | Month number with 0 padding (01-12)                |
+| mm    | Month number in Nepali with 0 padding (०१-१२)      |
+| MMM   | Short month name (Bai, Jes, Asa, Shr, etc.)        |
+| mmm   | Short month name in Nepali (ब‍ै, जे, अ, श्रा, etc) |
+| MMMM  | Full month name (Baisakh, Jestha, Asar, ...)       |
+| mmmm  | Full month name Nepali (बैसाख, जेष्ठ, ...)         |
+| D     | Day of month (1-31)                                |
+| d     | Day of month in Nepali (१-३१)                      |
+| DD    | Day of month zero padded (01-31)                   |
+| dd    | Day of month zero padded Nepali (०१-३१)            |
+| DDD   | Day of week short form (Sun, Mon, Tue, ...)        |
+| ddd   | Day of week short Nepali (आइत, सोम, ...)           |
+| DDDD  | Day of week full form (Sunday, Monday, ...)        |
+| dddd  | Day of week full Nepali (आइतबार, सोमबार, ...)      |
+
 ```vue
-
-YYYY - 4 digit of year (2075)
-yyyy - 4 digit of year in nepali unicode (२०७५)
-YYY  - 3 digit of year (075)
-yyy  - 3 digit of year (०७५)
-YY   - 2 digit of year
-yy   - 2 digit of year in nepali unicode (७५)
-M    - month number (1 - 12)
-m    - month number (१ - १२) in nepali unicode
-MM   - month number with 0 padding (01 - 12)
-mm   - month number in nepali unicode with 0 padding - (०१-१२)
-MMM  - short month name (Bai, Jes, Asa, Shr, etc.)
-mmm  - short month name in nepali unicde (ब‍ै, जे, अ, श्रा, etc)
-MMMM - full month name (Baisakh, Jestha, Asar, ...)
-mmmm - full month name nepali (बैसाख, जेष्ठ, ...)
-D    - Day of Month (1, 2, ... 31, 32)
-d    - Day of Month in Nepali unicode (१, २, ३ ... ३१, ३२)
-DD   - Day of Month with zero padding (01, 02, ...)
-dd   - Day of Month with zero padding in Nepali unicode (०१, ०२, ...)
-DDD  - Day of Week short form (Sun, Mon, Tue, ...)
-ddd  - Day of week in short form nepali (आइत, सोम, ...)
-DDDD - Day of week full form (Sunday, Monday, Tuesday, ...)
-dddd - Day of week full form nepali (आइतबार, सोमबार, ...)
-
-```
-
-```vue
-
 <template>
-  <NepaliDatePicker format="YYYY-MM-DD"/>
+  <NepaliDatePicker format="YYYY-MM-DD" />
 </template>
-
 ```
 
-## Examples - value
-
-Initial value for the datepicker.
-
+5. `v-model/modelValue`
+   
 ```vue
-
 <script setup>
-import {ref} from 'vue'
-
-const birthDay = ref('2055-02-20')
+import { ref } from 'vue';
+const birthDay = ref('2055-02-20');
+const modelValue = ref('2055-02-20');
 </script>
 
 <template>
-  <NepaliDatePicker :modelValue="birthDay"/>
+  <NepaliDatePicker v-model="birthDay" />
+  <br />
+  <NepaliDatePicker :modelValue="modelValue" />
 </template>
-
 ```
 
-## Examples - yearSelect
-
-The dropdown year select can be turned off using boolean type to yearSelect
+6. `yearSelect / monthSelect`
 
 ```vue
-
 <template>
-  <NepaliDatePicker :yearSelect="false"/>
+  <NepaliDatePicker :yearSelect="false" :monthSelect="false" />
 </template>
-
 ```
 
-## Examples - monthSelect
-
-The dropdown month select can be turned off using boolean type to monthSelect
+7. `All-in-One Example`
 
 ```vue
-
-<template>
-  <NepaliDatePicker :monthSelect="false"/>
-</template>
-
-```
-
-## Examples - All in one
-
-```vue
-
 <template>
   <NepaliDatePicker
-      calenderType="Nepali"
-      placeholder="YYYY-MM-DD"
-      format="YYYY-MM-DD"
-      value="2055-02-20"
-      :yearSelect="false"
-      :monthSelect="false"
+    calenderType="Nepali"
+    placeholder="YYYY-MM-DD"
+    format="YYYY-MM-DD"
+    value="2055-02-20"
+    :yearSelect="false"
+    :monthSelect="false"
   />
 </template>
-
 ```
 
-## Examples - Custom Component
+8. `Custom Component using Composable`
 
 ```vue
-
 <script setup>
-import {defineProps, ref} from 'vue'
-import {useDate} from "np-date-picker-vue-3";
+import { defineProps, ref } from 'vue';
+import { useDate } from 'np-date-picker-vue-3';
 
 const props = defineProps({
-  format: {type: String, default: "YYYY-MM-DD"},
-  calenderType: {type: String, default: "English"},
-  yearSelect: {type: Boolean, default: true},
-  monthSelect: {type: Boolean, default: true},
-  classValue: {type: String, default: ""},
-  placeholder: {type: String, default: ""},
-  modelValue: {type: String, default: ""},
+  format: { type: String, default: "YYYY-MM-DD" },
+  calenderType: { type: String, default: "English" },
+  yearSelect: { type: Boolean, default: true },
+  monthSelect: { type: Boolean, default: true },
+  classValue: { type: String, default: "" },
+  placeholder: { type: String, default: "" },
+  modelValue: { type: String, default: "" },
 })
 
-const {days, date, visible, show} = useDate(props)
-
+const { days, date, visible, show } = useDate(props);
 const formData = ref('');
 
 function selectDay(dateData) {
   date.value = dateData;
-  formData.value = date.value.format(props.format)
+  formData.value = date.value.format(props.format);
 }
-
 </script>
 
 <template>
   <input type="text" v-model="formData" @focus="show">
-  <div>
-    {{ formData }}
-  </div>
+  <div>{{ formData }}</div>
   <div v-if="visible" class="flex flex-wrap" style="max-width: 400px; margin-top: 10px;">
     <div class="day-box" v-for="(date, i) in days" :key="i">
       <div class="cursor-pointer" @click="selectDay(date)">{{ date.day }}</div>
@@ -216,24 +188,10 @@ function selectDay(dateData) {
 </template>
 
 <style>
-.flex {
-  display: flex;
-}
-
-.flex-wrap {
-  flex-wrap: wrap;
-}
-
-.day-box {
-  outline: 1px solid red;
-  padding: 12px;
-  width: 40px;
-  background: #eee;
-}
-
-.cursor-pointer {
-  cursor: pointer
-}
+.flex { display: flex; }
+.flex-wrap { flex-wrap: wrap; }
+.day-box { outline: 1px solid red; padding: 12px; width: 40px; background: #eee; }
+.cursor-pointer { cursor: pointer; }
 </style>
-
 ```
+
