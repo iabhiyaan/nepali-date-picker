@@ -2,8 +2,8 @@
 import NepaliDatePicker from "../components/NepaliDatePicker.vue";
 
 defineOptions({
-  inheritAttrs: false
-})
+  inheritAttrs: false,
+});
 
 const props = defineProps({
   fromDate: {},

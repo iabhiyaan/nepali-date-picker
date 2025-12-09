@@ -1,31 +1,31 @@
 // Import vue component
-import component from '@/NepaliDatePicker.vue';
+import component from "@/NepaliDatePicker.vue";
 
 // install function executed by Vue.use()
 const install = function installVNepalidatepicker(Vue) {
-    if (install.installed) return;
-    install.installed = true;
-    Vue.createApp({}).component('NepaliDatePicker', component);
+  if (install.installed) return;
+  install.installed = true;
+  Vue.createApp({}).component("NepaliDatePicker", component);
 };
 
 // Create module definition for Vue.use()
 const plugin = {
-    install,
+  install,
 };
 
 // To auto-install on non-es builds, when vue is found
 // eslint-disable-next-line no-redeclare
 /* global window, global */
-if ('false' === process.env.ES_BUILD) {
-    let GlobalVue = null;
-    if (typeof window !== 'undefined') {
-        GlobalVue = window.Vue;
-    } else if (typeof global !== 'undefined') {
-        GlobalVue = global.Vue;
-    }
-    if (GlobalVue) {
-        GlobalVue.use(plugin);
-    }
+if ("false" === process.env.ES_BUILD) {
+  let GlobalVue = null;
+  if (typeof window !== "undefined") {
+    GlobalVue = window.Vue;
+  } else if (typeof global !== "undefined") {
+    GlobalVue = global.Vue;
+  }
+  if (GlobalVue) {
+    GlobalVue.use(plugin);
+  }
 }
 
 // Inject install function into component - allows component
