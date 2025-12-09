@@ -19,7 +19,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "audit": "npm audit",
+    "audit:fix": "npm audit fix"
   },
   "repository": {
     "type": "git",
