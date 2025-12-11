@@ -1,6 +1,4 @@
 <script setup>
-// helpers
-import { getCurrentInstance, useSlots } from "vue";
 import useDate from "../composables/useDate";
 
 const props = defineProps({
