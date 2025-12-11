@@ -1,5 +1,6 @@
 <script setup>
 // helpers
+import { getCurrentInstance, useSlots } from "vue";
 import useDate from "../composables/useDate";
 
 const props = defineProps({
@@ -17,6 +18,9 @@ const props = defineProps({
   monthSelect: { type: Boolean, default: true },
   classValue: { type: String, default: "" },
   placeholder: { type: String, default: "" },
+  calenderHeaderStyle: { type: Object, default: () => ({}) },
+  calenderYearStyle: { type: Object, default: () => ({}) },
+  calenderDateStyle: { type: Object, default: () => ({}) },
 });
 
 const dateValue = defineModel({ default: "" });
@@ -69,10 +73,20 @@ function today() {
       :class="classValue"
     />
     <div v-if="visible" :class="['calendar', { show: visible }]">
-      <div class="calendar__header">
-        <div class="calendar__year">{{ formattedYear }}</div>
-        <div class="calendar__date">{{ formattedDate }}</div>
-      </div>
+      <slot name="calender-header">
+        <div class="calendar__header" :style="calenderHeaderStyle">
+          <slot name="calendar-year" :formattedYear="formattedYear">
+            <div class="calendar__year" :style="calenderYearStyle">
+              {{ formattedYear }}
+            </div>
+          </slot>
+          <slot name="calendar-date" :formattedDate="formattedDate">
+            <div class="calendar__date" :style="calenderDateStyle">
+              {{ formattedDate }}
+            </div>
+          </slot>
+        </div>
+      </slot>
       <div class="calendar__body">
         <!-- month -->
         <div class="calendar__month">

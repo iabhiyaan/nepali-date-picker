@@ -5,11 +5,17 @@ import NepaliDatePicker from "./components/NepaliDatePicker.vue";
 
 import Meeting from "./examples/Meeting.vue";
 import CustomDatePicker from "./examples/CustomDatePicker.vue";
+import useDate from "./composables/useDate";
 
 const englishDate = ref("");
 const nepaliDate = ref("");
 const englishDate1 = ref("");
 const nepaliDate1 = ref("");
+const slottedDate = ref("");
+
+const { formattedYear } = useDate({
+  modelValue: slottedDate.value,
+});
 </script>
 
 <template>
@@ -64,5 +70,30 @@ const nepaliDate1 = ref("");
         <div class="mt-4">{{ nepaliDate1 }}</div>
       </div>
     </div>
+    <div style="max-width: 200px">
+      <label>Nepali date picker with slots</label>
+      <NepaliDatePicker v-model="slottedDate" :calenderHeaderStyle="{ backgroundColor: '#b81c1d' }">
+        <template #calendar-year>
+          <div class="slotted-calender-year">
+            Custom Year: {{ formattedYear }}
+          </div>
+        </template>
+        <template #calendar-date="{ formattedDate }">
+          <div class="slotted-calender-date">
+            formattedDate: {{ formattedDate }}
+          </div>
+        </template>
+      </NepaliDatePicker>
+    </div>
   </div>
 </template>
+
+<style scoped>
+.slotted-calender-year {
+  color: #d5d5d5;
+}
+
+.slotted-calender-date {
+  color: #bcbcbc;
+}
+</style>
