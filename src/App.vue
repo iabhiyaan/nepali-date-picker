@@ -11,6 +11,8 @@ const nepaliDate = ref("");
 const englishDate1 = ref("");
 const nepaliDate1 = ref("");
 const slottedDate = ref("");
+// Template ref to access the exposed composable state from NepaliDatePicker
+const slottedDatePickerRef = ref(null);
 </script>
 
 <template>
@@ -68,12 +70,13 @@ const slottedDate = ref("");
     <div style="max-width: 200px">
       <label>Nepali date picker with slots</label>
       <NepaliDatePicker
+        ref="slottedDatePickerRef"
         v-model="slottedDate"
         :calenderHeaderStyle="{ backgroundColor: '#b81c1d' }"
       >
-        <template #calendar-year="{ formattedYear }">
+        <template #calendar-year>
           <div class="slotted-calender-year">
-            Custom Year: {{ formattedYear }}
+            Custom Year: {{ slottedDatePickerRef?.formattedYear }}
           </div>
         </template>
         <template #calendar-date="{ formattedDate }">

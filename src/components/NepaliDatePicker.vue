@@ -58,6 +58,35 @@ function select(dayData) {
 function today() {
   dateValue.value = getToday();
 }
+
+// Expose the composable state so parent components can access it via template ref
+defineExpose({
+  // Core state
+  formattedYear,
+  formattedDate,
+  formattedYearOrMonth,
+  formattedTodayText,
+
+  // Navigation
+  yearValue,
+  monthValue,
+  days,
+  weekdays,
+
+  // Methods
+  prev,
+  next,
+  show,
+  getToday,
+  selectDate,
+  select,
+  today,
+
+  // Utilities
+  formatNepali,
+  convertToNepali,
+  getNepaliDateWithYear,
+});
 </script>
 
 <template>
