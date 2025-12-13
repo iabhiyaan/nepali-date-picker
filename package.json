@@ -43,8 +43,8 @@
     "vue nepali"
   ],
   "dependencies": {
-    "vue": "^3.5.13",
-    "nepali-date": "^0.1.3"
+    "nepali-date": "^0.1.3",
+    "vue": "^3.5.13"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.3",
