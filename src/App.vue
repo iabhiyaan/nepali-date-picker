@@ -74,16 +74,6 @@ const slottedDatePickerRef = ref(null);
         v-model="slottedDate"
         :calenderHeaderStyle="{ backgroundColor: '#b81c1d' }"
       >
-        <template #calendar-year>
-          <div class="slotted-calender-year">
-            Custom Year: {{ slottedDatePickerRef?.formattedYear }}
-          </div>
-        </template>
-        <template #calendar-date="{ formattedDate }">
-          <div class="slotted-calender-date">
-            formattedDate: {{ formattedDate }}
-          </div>
-        </template>
       </NepaliDatePicker>
     </div>
   </div>

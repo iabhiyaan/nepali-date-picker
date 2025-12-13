@@ -16,9 +16,54 @@ const props = defineProps({
   monthSelect: { type: Boolean, default: true },
   classValue: { type: String, default: "" },
   placeholder: { type: String, default: "" },
-  calenderHeaderStyle: { type: Object, default: () => ({}) },
-  calenderYearStyle: { type: Object, default: () => ({}) },
-  calenderDateStyle: { type: Object, default: () => ({}) },
+  calendarHeaderStyle: { type: Object, default: () => ({}) },
+  calendarYearStyle: { type: Object, default: () => ({}) },
+  calendarDateStyle: { type: Object, default: () => ({}) },
+  calendarBodyStyle: { type: Object, default: () => ({}) },
+  calendarMonthStyle: { type: Object, default: () => ({}) },
+  monthSelectStyle: { type: Object, default: () => ({}) },
+  yearSelectStyle: {
+    type: Object,
+    default: () => ({
+      "margin-left": "5px",
+    }),
+  },
+  calendarWeekWrapperStyle: {
+    type: Object,
+    default: () => ({
+      padding: "3px",
+    }),
+  },
+  calendarWeeksStyle: {
+    type: Object,
+    default: () => ({}),
+  },
+  calendarWeekDaysStyle: {
+    type: Object,
+    default: () => ({
+      "font-weight": "bold",
+    }),
+  },
+  calendarDaysWrapperStyle: {
+    type: Object,
+    default: () => ({}),
+  },
+  calendarDaySpacerStyle: {
+    type: Object,
+    default: () => ({}),
+  },
+  calendarDayStyle: {
+    type: Object,
+    default: () => ({}),
+  },
+  datePickerWrapperStyle: {
+    type: Object,
+    default: () => ({}),
+  },
+  calendarFooterStyle: {
+    type: Object,
+    default: () => ({}),
+  },
 });
 
 const dateValue = defineModel({ default: "" });
@@ -90,7 +135,7 @@ defineExpose({
 </script>
 
 <template>
-  <div class="datepicker" @click.stop>
+  <div class="datepicker" @click.stop :style="datePickerWrapperStyle">
     <input
       type="text"
       v-model="dateValue"
@@ -100,102 +145,192 @@ defineExpose({
       :class="classValue"
     />
     <div v-if="visible" :class="['calendar', { show: visible }]">
-      <slot name="calender-header">
-        <div class="calendar__header" :style="calenderHeaderStyle">
+      <slot name="calendar-header">
+        <div class="calendar__header" :style="calendarHeaderStyle">
           <slot name="calendar-year" :formattedYear="formattedYear">
-            <div class="calendar__year" :style="calenderYearStyle">
+            <div class="calendar__year" :style="calendarYearStyle">
               {{ formattedYear }}
             </div>
           </slot>
           <slot name="calendar-date" :formattedDate="formattedDate">
-            <div class="calendar__date" :style="calenderDateStyle">
+            <div class="calendar__date" :style="calendarDateStyle">
               {{ formattedDate }}
             </div>
           </slot>
         </div>
       </slot>
-      <div class="calendar__body">
-        <!-- month -->
-        <div class="calendar__month">
-          <button class="calendar__month__prev" @click="prev">
-            <b>></b>
-          </button>
-          <span>{{ formattedYearOrMonth }} </span>
-          <select
-            @change="monthSelectChange"
-            v-model="monthValue"
-            size="mini"
-            v-if="monthSelect"
-            style=""
-          >
-            <option
-              style="text-align-last: center"
-              v-for="(month, index) in getMonthsList"
-              :key="month"
-              :label="month"
-              :value="index"
-            >
-              <!-- {{ month }} -->
-            </option>
-          </select>
-          <select
-            @change="yearSelectChange"
-            v-model="yearValue"
-            size="mini"
-            v-if="yearSelect"
-            style="margin-left: 5px"
-          >
-            <option
-              style="text-align-last: center"
-              v-for="i in numberOfYears"
-              :key="i"
-              :value="startingYear + (i - 1)"
-              :label="
-                formatNepali
-                  ? getNepaliDateWithYear(startingYear + (i - 1)).substr(0, 4)
-                  : startingYear + (i - 1)
-              "
-            ></option>
-          </select>
-          <button icon="el-icon-arrow-right" @click="next"><b>></b></button>
-        </div>
+      <slot
+        name="calendar-body"
+        :prev="prev"
+        :next="next"
+        :monthValue="monthValue"
+        :yearValue="yearValue"
+        :monthSelectChange="monthSelectChange"
+        :yearSelectChange="yearSelectChange"
+        :getMonthsList="getMonthsList"
+        :formattedYearOrMonth="formattedYearOrMonth"
+        :numberOfYears="numberOfYears"
+        :startingYear="startingYear"
+      >
+        <div class="calendar__body" :style="calendarBodyStyle">
+          <!-- month -->
+          <slot name="calendar-month-header">
+            <div class="calendar__month" :style="calendarMonthStyle">
+              <slot name="calendar-month-prev-button" :prev="prev">
+                <button class="calendar__month__prev" @click="prev">
+                  <b>></b>
+                </button>
+              </slot>
 
-        <!-- week days -->
-        <div style="padding: 3px">
-          <div class="calendar__weeks">
-            <div
-              style="font-weight: bold"
-              class="calendar__weekday"
-              v-for="(weekday, w) in weekdays"
-              :key="w"
-            >
-              {{ weekday }}
+              <slot
+                name="calendar-month-select"
+                :monthValue="monthValue"
+                :monthSelectChange="monthSelectChange"
+                :getMonthsList="getMonthsList"
+                :formattedYearOrMonth="formattedYearOrMonth"
+                :formatNepali="formatNepali"
+              >
+                <slot
+                  v-if="!monthSelect"
+                  name="calendar-month-name-or-year"
+                  :formattedYearOrMonth="formattedYearOrMonth"
+                >
+                  <span>{{ formattedYearOrMonth }} </span>
+                </slot>
+                <select
+                  v-if="monthSelect"
+                  @change="monthSelectChange"
+                  v-model="monthValue"
+                  size="mini"
+                  :style="monthSelectStyle"
+                >
+                  <option
+                    style="text-align-last: center"
+                    v-for="(month, index) in getMonthsList"
+                    :key="month"
+                    :label="month"
+                    :value="index"
+                  />
+                </select>
+              </slot>
+
+              <slot
+                name="calendar-year-select"
+                :yearValue="yearValue"
+                :yearSelectChange="yearSelectChange"
+                :numberOfYears="numberOfYears"
+                :startingYear="startingYear"
+                :formatNepali="formatNepali"
+              >
+                <select
+                  @change="yearSelectChange"
+                  v-model="yearValue"
+                  size="mini"
+                  v-if="yearSelect"
+                  :style="yearSelectStyle"
+                >
+                  <option
+                    style="text-align-last: center"
+                    v-for="i in numberOfYears"
+                    :key="i"
+                    :value="startingYear + (i - 1)"
+                    :label="
+                      formatNepali
+                        ? getNepaliDateWithYear(startingYear + (i - 1)).substr(
+                            0,
+                            4
+                          )
+                        : startingYear + (i - 1)
+                    "
+                  ></option>
+                </select>
+              </slot>
+
+              <slot name="calendar-month-next-button" :next="next">
+                <button icon="el-icon-arrow-right" @click="next">
+                  <b>></b>
+                </button>
+              </slot>
             </div>
-          </div>
-          <!-- days of month -->
-          <div class="calendar__days">
-            <div
-              class="calendar__day_spacer"
-              :style="{ gridColumn: `span ${startWeek}` }"
-            ></div>
-            <div
-              :class="[
-                'calendar__day',
-                { selected: active(day) },
-                { today: checkToday(day) },
-              ]"
-              v-for="(day, d) in days"
-              :key="d"
-              @click="select(day)"
-            >
-              {{ formatNepali ? convertToNepali(day).substr(8, 10) : day.day }}
+          </slot>
+
+          <!-- week days -->
+          <slot name="calendar-week-days">
+            <div :style="calendarWeekWrapperStyle">
+              <div class="calendar__weeks" :style="calendarWeeksStyle">
+                <slot name="calendar-week-days-name" :weekdays="weekdays">
+                  <div
+                    :style="calendarWeekDaysStyle"
+                    class="calendar__weekday"
+                    v-for="(weekday, w) in weekdays"
+                    :key="w"
+                  >
+                    {{ weekday }}
+                  </div>
+                </slot>
+              </div>
+              <!-- days of month -->
+              <slot
+                name="calendar-days-grid"
+                :startWeek="startWeek"
+                :days="days"
+                :active="active"
+                :checkToday="checkToday"
+                :select="select"
+                :formatNepali="formatNepali"
+                :convertToNepali="convertToNepali"
+              >
+                <div class="calendar__days" :style="calendarDaysWrapperStyle">
+                  <div
+                    class="calendar__day_spacer"
+                    :style="{
+                      gridColumn: `span ${startWeek}`,
+                      ...calendarDaySpacerStyle,
+                    }"
+                  />
+                  <slot
+                    name="calendar-days"
+                    :days="days"
+                    :active="active"
+                    :checkToday="checkToday"
+                    :select="select"
+                    :formatNepali="formatNepali"
+                    :convertToNepali="convertToNepali"
+                  >
+                    <div
+                      :class="[
+                        'calendar__day',
+                        { selected: active(day) },
+                        { today: checkToday(day) },
+                      ]"
+                      :style="calendarDayStyle"
+                      v-for="(day, d) in days"
+                      :key="d"
+                      @click="select(day)"
+                    >
+                      {{
+                        formatNepali
+                          ? convertToNepali(day).substr(8, 10)
+                          : day.day
+                      }}
+                    </div>
+                  </slot>
+                </div>
+              </slot>
             </div>
-          </div>
+          </slot>
         </div>
-      </div>
-      <div class="calendar__footer">
-        <button @click="today">{{ formattedTodayText }}</button>
-      </div>
+      </slot>
+
+      <slot
+        name="calendar-footer"
+        :formattedTodayText="formattedTodayText"
+        :today="today"
+      >
+        <div class="calendar__footer" :style="calendarFooterStyle">
+          <button @click="today">{{ formattedTodayText }}</button>
+        </div>
+      </slot>
     </div>
   </div>
 </template>
