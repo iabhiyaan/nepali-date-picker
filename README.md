@@ -155,7 +155,7 @@ const modelValue = ref('2055-02-20');
 
 ```vue
 <script setup>
-import { defineProps, ref } from 'vue';
+import { ref } from 'vue';
 import { useDate } from 'np-date-picker-vue-3';
 
 const props = defineProps({
