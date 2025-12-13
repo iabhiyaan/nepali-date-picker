@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, useTemplateRef } from "vue";
 
 import NepaliDatePicker from "./components/NepaliDatePicker.vue";
 
@@ -11,8 +11,8 @@ const nepaliDate = ref("");
 const englishDate1 = ref("");
 const nepaliDate1 = ref("");
 const slottedDate = ref("");
-// Template ref to access the exposed composable state from NepaliDatePicker
-const slottedDatePickerRef = ref(null);
+
+const nepaliDatePicker = useTemplateRef("nepaliDatePickerRef");
 </script>
 
 <template>
@@ -70,11 +70,10 @@ const slottedDatePickerRef = ref(null);
     <div style="max-width: 200px">
       <label>Nepali date picker with slots</label>
       <NepaliDatePicker
-        ref="slottedDatePickerRef"
+        ref="nepaliDatePickerRef"
         v-model="slottedDate"
         :calenderHeaderStyle="{ backgroundColor: '#b81c1d' }"
-      >
-      </NepaliDatePicker>
+      />
     </div>
   </div>
 </template>
