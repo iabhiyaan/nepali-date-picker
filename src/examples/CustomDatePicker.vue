@@ -1,6 +1,6 @@
 <script type="module" setup>
 // node_modules
-import { defineProps, ref } from "vue";
+import { ref } from "vue";
 // helpers
 import useDate from "@/composables/useDate";
 

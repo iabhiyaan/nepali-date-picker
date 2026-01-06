@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, useTemplateRef } from "vue";
 
 import NepaliDatePicker from "./components/NepaliDatePicker.vue";
 
@@ -10,6 +10,9 @@ const englishDate = ref("");
 const nepaliDate = ref("");
 const englishDate1 = ref("");
 const nepaliDate1 = ref("");
+const slottedDate = ref("");
+
+const nepaliDatePicker = useTemplateRef("nepaliDatePickerRef");
 </script>
 
 <template>
@@ -64,5 +67,23 @@ const nepaliDate1 = ref("");
         <div class="mt-4">{{ nepaliDate1 }}</div>
       </div>
     </div>
+    <div style="max-width: 200px">
+      <label>Nepali date picker with slots</label>
+      <NepaliDatePicker
+        ref="nepaliDatePickerRef"
+        v-model="slottedDate"
+        :calenderHeaderStyle="{ backgroundColor: '#b81c1d' }"
+      />
+    </div>
   </div>
 </template>
+
+<style scoped>
+.slotted-calender-year {
+  color: #d5d5d5;
+}
+
+.slotted-calender-date {
+  color: #bcbcbc;
+}
+</style>
